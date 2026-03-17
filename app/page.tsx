@@ -1,8 +1,12 @@
-﻿const stats = [
-  { value: "7,393", label: "Học viên đang theo dõi" },
-  { value: "05", label: "Khóa học thực chiến" },
-  { value: "18", label: "Template và checklist" },
-  { value: "12", label: "Case study nổi bật" },
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+const stats = [
+  { value: 7393, suffix: "", label: "Học viên đang theo dõi" },
+  { value: 5, suffix: "", label: "Khóa học thực chiến" },
+  { value: 18, suffix: "", label: "Template và checklist" },
+  { value: 12, suffix: "", label: "Case study nổi bật" },
 ];
 
 const painPoints = [
@@ -112,13 +116,75 @@ const faqs = [
   },
 ];
 
+function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    let frame = 0;
+    let started = false;
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      const duration = 1200;
+      const startTime = performance.now();
+
+      const tick = (time: number) => {
+        const progress = Math.min((time - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplay(Math.round(value * eased));
+        if (progress < 1) {
+          frame = requestAnimationFrame(tick);
+        }
+      };
+
+      frame = requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            start();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [value]);
+
+  return <span ref={ref}>{display.toLocaleString("vi-VN")}{suffix}</span>;
+}
+
 export default function Home() {
+  const [activePainCard, setActivePainCard] = useState(0);
+
+  const showNextPain = () => {
+    setActivePainCard((current) => (current + 1) % painPoints.length);
+  };
+
+  const showPrevPain = () => {
+    setActivePainCard((current) => (current - 1 + painPoints.length) % painPoints.length);
+  };
+
   return (
     <main className="page-shell">
       <nav className="topbar">
         <div className="container nav-inner">
           <a className="brand" href="#hero">
-            Ms Huyen
+            Spring
             <span>academy</span>
           </a>
           <div className="nav-links">
@@ -195,10 +261,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="container stats-grid">
+        <div className="container stats-strip" aria-label="Thống kê nổi bật">
           {stats.map((item) => (
-            <article key={item.label} className="stat-card">
-              <strong>{item.value}</strong>
+            <article key={item.label} className="stat-inline">
+              <strong>
+                <CountUp value={item.value} suffix={item.suffix} />
+              </strong>
               <span>{item.label}</span>
             </article>
           ))}
@@ -262,13 +330,52 @@ export default function Home() {
             <span className="pill">Vì sao học viên tìm đến</span>
             <h2>Không thiếu kiến thức, chỉ thiếu một hệ thống làm marketing có chủ đích</h2>
           </div>
-          <div className="pain-grid">
+
+          <div className="pain-grid pain-grid-desktop">
             {painPoints.map((item) => (
               <article key={item} className="pain-card">
                 <span className="diamond" />
                 <p>{item}</p>
               </article>
             ))}
+          </div>
+
+          <div className="pain-deck-mobile" aria-label="Các vấn đề thường gặp trên mobile">
+            <div className="pain-deck-stage">
+              {painPoints.map((item, index) => {
+                const offset = (index - activePainCard + painPoints.length) % painPoints.length;
+                return (
+                  <article
+                    key={item}
+                    className={`pain-card pain-card-deck deck-pos-${offset}`}
+                    onClick={showNextPain}
+                    aria-hidden={offset > 2}
+                  >
+                    <span className="diamond" />
+                    <p>{item}</p>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="pain-deck-controls">
+              <button className="deck-btn" type="button" onClick={showPrevPain}>
+                Trước
+              </button>
+              <div className="deck-dots">
+                {painPoints.map((item, index) => (
+                  <button
+                    key={item}
+                    type="button"
+                    className={`deck-dot${index === activePainCard ? " active" : ""}`}
+                    onClick={() => setActivePainCard(index)}
+                    aria-label={`Hiển thị thẻ ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button className="deck-btn" type="button" onClick={showNextPain}>
+                Tiếp
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -385,11 +492,11 @@ export default function Home() {
         <div className="container footer-grid">
           <div>
             <a className="brand footer-brand" href="#hero">
-              Ms Huyen
+              Spring
               <span>academy</span>
             </a>
             <p className="footer-copy">
-              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có hệ thống.
+              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có định hướng và chiều sâu.
             </p>
           </div>
           <div>
@@ -408,7 +515,7 @@ export default function Home() {
             <h3>Hỗ trợ</h3>
             <a href="#faq">FAQ</a>
             <a href="#offer">Đăng ký tư vấn</a>
-            <a href="mailto:hello@mshuyenacademy.vn">hello@mshuyenacademy.vn</a>
+            <a href="mailto:hello@springacademy.vn">hello@springacademy.vn</a>
           </div>
         </div>
       </footer>
