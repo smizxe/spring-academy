@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const stats = [
   { value: 7393, suffix: "", label: "Học viên đang theo dõi" },
@@ -22,6 +23,7 @@ const modules = [
     tag: "Video Marketing",
     price: "2.468.000đ",
     note: "Kỹ năng tạo thu nhập cao từ điện thoại",
+    image: "/images/course-1.png",
     bullets: [
       "Quay dựng ngắn gọn để lên nội dung nhanh",
       "Dùng video để bán hàng và xây thương hiệu",
@@ -33,6 +35,7 @@ const modules = [
     tag: "Affiliate Marketing",
     price: "Miễn phí",
     note: "Kiếm tiền với Shopee affiliate có quy trình",
+    image: "/images/course-2.png",
     bullets: [
       "Hiểu đúng Shopee Affiliate",
       "Biết cách tối ưu nội dung chốt đơn",
@@ -44,6 +47,7 @@ const modules = [
     tag: "Financial Management",
     price: "1.000.000đ",
     note: "Xây tài chính đúng tương lai",
+    image: "/images/course-3.png",
     bullets: [
       "Quản trị dòng tiền cá nhân",
       "Lập kế hoạch thu chi rõ ràng",
@@ -55,6 +59,7 @@ const modules = [
     tag: "Personal Brand",
     price: "Miễn phí",
     note: "Xây nhãn hiệu đúng cỡ độ",
+    image: "/images/course-4.png",
     bullets: [
       "Xác định thông điệp thương hiệu",
       "Biết cách làm nội dung hút đúng khách",
@@ -200,6 +205,13 @@ export default function Home() {
       </nav>
 
       <section className="hero" id="hero">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="petal" style={{left: '10%', animationDuration: '12s', animationDelay: '0s'}}></div>
+          <div className="petal" style={{left: '30%', animationDuration: '15s', animationDelay: '3s', width: '8px', height: '8px'}}></div>
+          <div className="petal" style={{left: '50%', animationDuration: '18s', animationDelay: '1s', width: '14px', height: '14px'}}></div>
+          <div className="petal" style={{left: '70%', animationDuration: '14s', animationDelay: '5s'}}></div>
+          <div className="petal" style={{left: '90%', animationDuration: '16s', animationDelay: '2s', width: '10px', height: '10px'}}></div>
+        </div>
         <div className="hero-blobs" aria-hidden="true">
           <span className="blob blob-yellow" />
           <span className="blob blob-pink" />
@@ -380,6 +392,37 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="about-section" id="about">
+        <div className="container about-grid">
+          <div className="about-image-wrapper">
+            <Image src="/images/expert.png" alt="Ms Huyen - Marketing Expert" width={600} height={800} className="about-image" />
+          </div>
+          <div className="about-copy">
+            <span className="pill">Về người đồng hành</span>
+            <h2>Hiểu thị trường, nắm tâm lý, xây hệ thống ra đơn bền vững</h2>
+            <p>
+              Chào bạn, tôi là <strong>Ms Huyen</strong>. Với thực chiến nhiều năm trong ngành digital marketing và xây dựng nhãn hiệu, tôi hiểu rõ những "nỗi đau" của người kinh doanh online khi phải vật lộn với content vô hồn, chi phí quảng cáo tăng cao và tỷ lệ chuyển đổi thê thảm.
+            </p>
+            <p>
+              Spring Academy ra đời không phải để dạy những lý thuyết sáo rỗng. Mọi khóa học, template và quy trình tại đây đều được đúc kết từ hàng trăm chiến dịch thực tế – giúp bạn xây dựng một hệ thống marketing tự động, chuyên nghiệp, mang lại khách hàng chất lượng một cách hoàn toàn dự đoán được.
+            </p>
+            <div className="about-stats">
+              <div>
+                <strong>+10</strong>
+                <span>Năm kinh nghiệm</span>
+              </div>
+              <div>
+                <strong>300+</strong>
+                <span>Thương hiệu đồng hành</span>
+              </div>
+            </div>
+            <a href="#courses" className="btn btn-primary" style={{marginTop: '32px'}}>
+              Bắt đầu thay đổi tư duy marketing
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="courses-section" id="courses">
         <div className="container section-heading center">
           <span className="pill">Sản phẩm nổi bật</span>
@@ -398,6 +441,8 @@ export default function Home() {
           {modules.map((course, index) => (
             <article key={course.title} className={`course-card tone-${index % 4}`}>
               <div className="course-thumb">
+                <Image src={course.image} alt={course.title} fill className="course-bg" />
+                <div className="course-thumb-overlay" />
                 <div className="thumb-badge">{course.tag}</div>
                 <div className="thumb-title">{course.title}</div>
               </div>

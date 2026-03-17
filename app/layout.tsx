@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Syne } from "next/font/google";
+import { Playfair_Display, Be_Vietnam_Pro, Questrial } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-body",
+const playfairDisplay = Playfair_Display({
+  subsets: ["vietnamese"],
+  variable: "--font-playfair",
 });
 
-const syne = Syne({
+const beVietnamPro = Be_Vietnam_Pro({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["vietnamese"],
+  variable: "--font-be-vietnam",
+});
+
+const questrial = Questrial({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-questrial",
 });
 
 export const metadata: Metadata = {
   title: "Ms Huyen Marketing Course",
-  description: "Nen tang khoa hoc marketing thuc chien danh cho nguoi kinh doanh online va marketer muon tang truong ben vung.",
+  description: "Nền tảng khóa học marketing thực chiến dành cho người kinh doanh online và marketer muốn tăng trưởng bền vững.",
 };
 
 export default function RootLayout({
@@ -23,8 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
-      <body className={`${spaceGrotesk.variable} ${syne.variable}`}>{children}</body>
+    <html lang="vi" suppressHydrationWarning>
+      <body className={`${beVietnamPro.variable} ${playfairDisplay.variable} ${questrial.variable} font-sans`}>
+        {children}
+      </body>
     </html>
   );
 }
