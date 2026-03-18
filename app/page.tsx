@@ -70,7 +70,7 @@ const modules = [
 
 const webinars = [
   {
-    title: "Zoom Webinar miễn phí & trả phí",
+    title: "Zoom Webinar miễn phí và trả phí",
     status: "Sắp tới",
     meta: "Tham gia học trực tiếp với chuyên gia",
   },
@@ -142,9 +142,7 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
         const progress = Math.min((time - startTime) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         setDisplay(Math.round(value * eased));
-        if (progress < 1) {
-          frame = requestAnimationFrame(tick);
-        }
+        if (progress < 1) frame = requestAnimationFrame(tick);
       };
 
       frame = requestAnimationFrame(tick);
@@ -170,7 +168,12 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
     };
   }, [value]);
 
-  return <span ref={ref}>{display.toLocaleString("vi-VN")}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {display.toLocaleString("vi-VN")}
+      {suffix}
+    </span>
+  );
 }
 
 export default function Home() {
@@ -205,20 +208,18 @@ export default function Home() {
       </nav>
 
       <section className="hero" id="hero">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="petal" style={{left: '10%', animationDuration: '12s', animationDelay: '0s'}}></div>
-          <div className="petal" style={{left: '30%', animationDuration: '15s', animationDelay: '3s', width: '8px', height: '8px'}}></div>
-          <div className="petal" style={{left: '50%', animationDuration: '18s', animationDelay: '1s', width: '14px', height: '14px'}}></div>
-          <div className="petal" style={{left: '70%', animationDuration: '14s', animationDelay: '5s'}}></div>
-          <div className="petal" style={{left: '90%', animationDuration: '16s', animationDelay: '2s', width: '10px', height: '10px'}}></div>
+        <div className="hero-petals" aria-hidden="true">
+          <span className="petal petal-a" />
+          <span className="petal petal-b" />
+          <span className="petal petal-c" />
+          <span className="petal petal-d" />
         </div>
         <div className="hero-blobs" aria-hidden="true">
-          <span className="blob blob-yellow" />
-          <span className="blob blob-pink" />
-          <span className="blob blob-blue" />
+          <span className="blob blob-nude" />
+          <span className="blob blob-rose" />
+          <span className="blob blob-blush" />
           <span className="spark spark-a" />
           <span className="spark spark-b" />
-          <span className="spark spark-c" />
         </div>
 
         <div className="container hero-grid">
@@ -232,8 +233,8 @@ export default function Home() {
               Từ Chuyên Gia Hàng Đầu
             </h1>
             <p className="hero-text">
-              Khóa học, webinar và bộ template được thiết kế để giúp bạn xây content, tạo funnel và biến marketing
-              thành một hệ thống ra đơn bền vững.
+              Khóa học, webinar và bộ template được thiết kế để giúp bạn xây content, tạo funnel và biến marketing thành
+              một hệ thống ra đơn bền vững, tinh gọn và dễ áp dụng vào kinh doanh thực tế.
             </p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#courses">
@@ -255,17 +256,17 @@ export default function Home() {
               <div className="panel-chip">Lộ trình nổi bật</div>
               <h2>Xây hệ thống marketing ra đơn không phụ thuộc may mắn</h2>
               <ul>
-                <li>Content strategy + social plan</li>
+                <li>Content strategy và social plan</li>
                 <li>Offer và funnel để chốt khách</li>
                 <li>Workflow tối ưu để làm đều và đo được</li>
               </ul>
             </div>
             <div className="panel-row">
-              <div className="panel-card accent-yellow">
+              <div className="panel-card accent-nude">
                 <strong>+32%</strong>
                 <span>Tăng tốc độ sản xuất nội dung</span>
               </div>
-              <div className="panel-card accent-pink">
+              <div className="panel-card accent-rose">
                 <strong>7 ngày</strong>
                 <span>Dễ dùng bộ template vào công việc</span>
               </div>
@@ -395,20 +396,24 @@ export default function Home() {
       <section className="about-section" id="about">
         <div className="container about-grid">
           <div className="about-image-wrapper">
-            <Image src="/images/expert.png" alt="Ms Huyen - Marketing Expert" width={600} height={800} className="about-image" />
+            <Image src="/images/expert.png" alt="Chuyên gia đồng hành cùng Spring Academy" width={600} height={780} className="about-image" />
           </div>
           <div className="about-copy">
             <span className="pill">Về người đồng hành</span>
             <h2>Hiểu thị trường, nắm tâm lý, xây hệ thống ra đơn bền vững</h2>
             <p>
-              Chào bạn, tôi là <strong>Ms Huyen</strong>. Với thực chiến nhiều năm trong ngành digital marketing và xây dựng nhãn hiệu, tôi hiểu rõ những "nỗi đau" của người kinh doanh online khi phải vật lộn với content vô hồn, chi phí quảng cáo tăng cao và tỷ lệ chuyển đổi thê thảm.
+              Chào bạn, tôi là <strong>Ms Huyền</strong>. Với nhiều năm thực chiến trong digital marketing và xây dựng
+              thương hiệu, tôi hiểu rõ những nỗi đau của người kinh doanh online khi phải vật lộn với content vô hồn,
+              chi phí quảng cáo tăng cao và tỷ lệ chuyển đổi thất thường.
             </p>
             <p>
-              Spring Academy ra đời không phải để dạy những lý thuyết sáo rỗng. Mọi khóa học, template và quy trình tại đây đều được đúc kết từ hàng trăm chiến dịch thực tế – giúp bạn xây dựng một hệ thống marketing tự động, chuyên nghiệp, mang lại khách hàng chất lượng một cách hoàn toàn dự đoán được.
+              Spring Academy ra đời không phải để dạy những lý thuyết sáo rỗng. Mỗi khóa học, template và quy trình tại
+              đây đều được đúc kết từ chiến dịch thực tế, giúp bạn xây dựng một hệ thống marketing mềm mại, chuyên
+              nghiệp, mang lại khách hàng chất lượng theo cách dự đoán được.
             </p>
             <div className="about-stats">
               <div>
-                <strong>+10</strong>
+                <strong>10+</strong>
                 <span>Năm kinh nghiệm</span>
               </div>
               <div>
@@ -416,7 +421,7 @@ export default function Home() {
                 <span>Thương hiệu đồng hành</span>
               </div>
             </div>
-            <a href="#courses" className="btn btn-primary" style={{marginTop: '32px'}}>
+            <a href="#courses" className="btn btn-primary about-cta">
               Bắt đầu thay đổi tư duy marketing
             </a>
           </div>
@@ -503,7 +508,10 @@ export default function Home() {
           <div>
             <span className="pill dark">Ưu đãi hiện tại</span>
             <h2>Sẵn sàng bắt đầu hành trình học tập và nâng cấp hệ thống marketing?</h2>
-            <p>Tham gia cùng hàng nghìn học viên đã biến kiến thức marketing thành doanh thu, thương hiệu và một quy trình vận hành rõ ràng.</p>
+            <p>
+              Tham gia cùng hàng nghìn học viên đã biến kiến thức marketing thành doanh thu, thương hiệu và một quy trình
+              vận hành rõ ràng.
+            </p>
           </div>
           <div className="offer-box">
             <div className="offer-price">
@@ -541,7 +549,8 @@ export default function Home() {
               <span>academy</span>
             </a>
             <p className="footer-copy">
-              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có định hướng và chiều sâu.
+              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có
+              định hướng và chiều sâu.
             </p>
           </div>
           <div>

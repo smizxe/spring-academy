@@ -1,27 +1,48 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Be_Vietnam_Pro, Questrial } from "next/font/google";
+import localFont from "next/font/local";
+import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
-const playfairDisplay = Playfair_Display({
+const beautique = localFont({
+  src: [
+    {
+      path: "../Beautique Display v1.0/Beautique Display/BeautiqueDisplay-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../Beautique Display v1.0/Beautique Display/BeautiqueDisplay-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../Beautique Display v1.0/Beautique Display/BeautiqueDisplay-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-beautique",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
   subsets: ["vietnamese"],
-  variable: "--font-playfair",
+  variable: "--font-cormorant",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["vietnamese"],
-  variable: "--font-be-vietnam",
-});
-
-const questrial = Questrial({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-questrial",
+  variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Ms Huyen Marketing Course",
-  description: "Nền tảng khóa học marketing thực chiến dành cho người kinh doanh online và marketer muốn tăng trưởng bền vững.",
+  title: "Spring Academy",
+  description:
+    "Nền tảng khóa học marketing thực chiến dành cho người kinh doanh online và marketer muốn tăng trưởng mềm mại, bền vững và có hệ thống.",
 };
 
 export default function RootLayout({
@@ -31,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={`${beVietnamPro.variable} ${playfairDisplay.variable} ${questrial.variable} font-sans`}>
+      <body className={`${beVietnamPro.variable} ${cormorant.variable} ${beautique.variable}`}>
         {children}
       </body>
     </html>
