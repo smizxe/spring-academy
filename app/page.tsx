@@ -17,6 +17,33 @@ const painPoints = [
   "Làm marketing theo cảm tính, không có hệ thống lặp lại",
 ];
 
+const timelineSteps = [
+  {
+    step: "Bước 01",
+    title: "Học tư duy và framework",
+    description:
+      "Nắm rõ logic marketing, offer, funnel và cách sắp xếp thông điệp cho từng giai đoạn để không còn làm nội dung theo cảm hứng.",
+  },
+  {
+    step: "Bước 02",
+    title: "Áp template vào business",
+    description:
+      "Sao chép checklist, script, content plan và workflow để triển khai ngay trong 7 ngày đầu mà không bị ngợp bởi quá nhiều lý thuyết.",
+  },
+  {
+    step: "Bước 03",
+    title: "Đo lường và tối ưu",
+    description:
+      "Theo dõi hiệu quả, biết cần sửa ở đâu và nâng cấp dần thành một hệ thống marketing mềm mại nhưng ra đơn đều đặn.",
+  },
+  {
+    step: "Bước 04",
+    title: "Nhân rộng và vận hành bền vững",
+    description:
+      "Biến những gì đã học thành tài sản lâu dài cho thương hiệu cá nhân, đội nhóm hoặc business online của bạn.",
+  },
+];
+
 const modules = [
   {
     title: "One-Phone Media",
@@ -87,18 +114,21 @@ const testimonials = [
       "Từ lúc có hệ thống content và offer rõ ràng, đội ngũ của tôi chốt lead ổn định hơn, không còn đăng bài theo cảm hứng.",
     author: "Chị Linh",
     role: "Chủ thương hiệu mỹ phẩm",
+    title: "Từ cảm hứng sang hệ thống",
   },
   {
     quote:
       "Khóa học không nói lý thuyết rỗng. Mỗi module đều có checklist và cách áp vào business nhỏ ngay lập tức.",
     author: "Anh Duy",
     role: "Founder local brand",
+    title: "Học xong làm được ngay",
   },
   {
     quote:
       "Phần hay nhất là cách biến personal brand thành một kênh bán hàng có logic và đo được hiệu quả.",
     author: "Chị Ngân",
     role: "Freelance marketer",
+    title: "Personal brand có chiến lược",
   },
 ];
 
@@ -178,6 +208,7 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
 
 export default function Home() {
   const [activePainCard, setActivePainCard] = useState(0);
+  const [activeReview, setActiveReview] = useState(0);
 
   const showNextPain = () => {
     setActivePainCard((current) => (current + 1) % painPoints.length);
@@ -198,7 +229,7 @@ export default function Home() {
           <div className="nav-links">
             <a href="#courses">Khóa học</a>
             <a href="#webinar">Webinar</a>
-            <a href="#results">Kết quả</a>
+            <a href="#results">Lộ trình</a>
             <a href="#faq">FAQ</a>
           </div>
           <a className="nav-cta" href="#offer">
@@ -402,14 +433,10 @@ export default function Home() {
             <span className="pill">Về người đồng hành</span>
             <h2>Hiểu thị trường, nắm tâm lý, xây hệ thống ra đơn bền vững</h2>
             <p>
-              Chào bạn, tôi là <strong>Ms Huyền</strong>. Với nhiều năm thực chiến trong digital marketing và xây dựng
-              thương hiệu, tôi hiểu rõ những nỗi đau của người kinh doanh online khi phải vật lộn với content vô hồn,
-              chi phí quảng cáo tăng cao và tỷ lệ chuyển đổi thất thường.
+              Chào bạn, tôi là <strong>Ms Huyền</strong>. Với nhiều năm thực chiến trong digital marketing và xây dựng thương hiệu, tôi hiểu rõ những nỗi đau của người kinh doanh online khi phải vật lộn với content vô hồn, chi phí quảng cáo tăng cao và tỷ lệ chuyển đổi thất thường.
             </p>
             <p>
-              Spring Academy ra đời không phải để dạy những lý thuyết sáo rỗng. Mỗi khóa học, template và quy trình tại
-              đây đều được đúc kết từ chiến dịch thực tế, giúp bạn xây dựng một hệ thống marketing mềm mại, chuyên
-              nghiệp, mang lại khách hàng chất lượng theo cách dự đoán được.
+              Spring Academy ra đời không phải để dạy những lý thuyết sáo rỗng. Mỗi khóa học, template và quy trình tại đây đều được đúc kết từ chiến dịch thực tế, giúp bạn xây dựng một hệ thống marketing mềm mại, chuyên nghiệp, mang lại khách hàng chất lượng theo cách dự đoán được.
             </p>
             <div className="about-stats">
               <div>
@@ -443,8 +470,8 @@ export default function Home() {
         </div>
 
         <div className="container course-grid">
-          {modules.map((course, index) => (
-            <article key={course.title} className={`course-card tone-${index % 4}`}>
+          {modules.map((course) => (
+            <article key={course.title} className="course-card">
               <div className="course-thumb">
                 <Image src={course.image} alt={course.title} fill className="course-bg" />
                 <div className="course-thumb-overlay" />
@@ -469,37 +496,57 @@ export default function Home() {
       </section>
 
       <section className="results-section" id="results">
-        <div className="container results-layout">
-          <div className="results-copy">
-            <span className="pill">Lộ trình triển khai</span>
-            <h2>Bạn không chỉ học lý thuyết. Bạn được dẫn cách áp vào việc kinh doanh thật.</h2>
-            <div className="steps">
-              <article className="step-card tilt-left">
-                <span>Step 01</span>
-                <h3>Học tư duy và framework</h3>
-                <p>Nắm rõ logic marketing, offer, funnel và cách sắp xếp thông điệp cho từng giai đoạn.</p>
-              </article>
-              <article className="step-card tilt-right">
-                <span>Step 02</span>
-                <h3>Áp template vào business</h3>
-                <p>Sao chép checklist, script, content plan và workflow để triển khai ngay trong 7 ngày đầu.</p>
-              </article>
-              <article className="step-card tilt-left">
-                <span>Step 03</span>
-                <h3>Đo lường và tối ưu</h3>
-                <p>Theo dõi hiệu quả, biết cần sửa ở đâu và nâng cấp dần thành một hệ thống ra đơn bền vững.</p>
-              </article>
-            </div>
-          </div>
-          <div className="results-testimonials">
-            {testimonials.map((item) => (
-              <article key={item.author} className="testimonial-card">
-                <p>&quot;{item.quote}&quot;</p>
-                <strong>{item.author}</strong>
-                <span>{item.role}</span>
+        <div className="container timeline-intro">
+          <span className="pill">Lộ trình triển khai</span>
+          <h2>Bạn không chỉ học lý thuyết. Bạn được dẫn từng bước để áp vào kinh doanh thật.</h2>
+          <p>Từng chặng được sắp xếp như một timeline rõ ràng, giúp bạn hiểu mình đang ở đâu, cần làm gì tiếp theo và nâng cấp hệ thống marketing theo đúng nhịp.</p>
+        </div>
+
+        <div className="container timeline-shell">
+          <div className="timeline-line" aria-hidden="true" />
+          <div className="timeline-items">
+            {timelineSteps.map((item, index) => (
+              <article key={item.step} className={`timeline-item ${index % 2 === 0 ? "left" : "right"}`}>
+                <div className="timeline-node" aria-hidden="true" />
+                <div className="timeline-card">
+                  <span>{item.step}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="reviews-section" id="reviews">
+        <div className="container reviews-layout">
+          <div className="reviews-copy">
+            <span className="pill">Review học viên</span>
+            <h2>Phản hồi thực tế từ những người đã học và triển khai</h2>
+            <p>Chọn từng card để xem góc nhìn khác nhau: từ người xây thương hiệu, founder đến freelancer đang tối ưu hệ thống bán hàng và nội dung.</p>
+          </div>
+
+          <div className="reviews-selector">
+            {testimonials.map((item, index) => (
+              <button
+                key={item.author}
+                type="button"
+                className={`review-tab${index === activeReview ? " active" : ""}`}
+                onClick={() => setActiveReview(index)}
+              >
+                <strong>{item.author}</strong>
+                <span>{item.title}</span>
+              </button>
+            ))}
+          </div>
+
+          <article className="review-feature-card">
+            <span className="review-badge">Review nổi bật</span>
+            <p>&quot;{testimonials[activeReview].quote}&quot;</p>
+            <strong>{testimonials[activeReview].author}</strong>
+            <span>{testimonials[activeReview].role}</span>
+          </article>
         </div>
       </section>
 
@@ -509,8 +556,7 @@ export default function Home() {
             <span className="pill dark">Ưu đãi hiện tại</span>
             <h2>Sẵn sàng bắt đầu hành trình học tập và nâng cấp hệ thống marketing?</h2>
             <p>
-              Tham gia cùng hàng nghìn học viên đã biến kiến thức marketing thành doanh thu, thương hiệu và một quy trình
-              vận hành rõ ràng.
+              Tham gia cùng hàng nghìn học viên đã biến kiến thức marketing thành doanh thu, thương hiệu và một quy trình vận hành rõ ràng.
             </p>
           </div>
           <div className="offer-box">
@@ -549,8 +595,7 @@ export default function Home() {
               <span>academy</span>
             </a>
             <p className="footer-copy">
-              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có
-              định hướng và chiều sâu.
+              Nền tảng học marketing thực chiến dành cho người kinh doanh online, creator và marketer muốn tăng trưởng có định hướng và chiều sâu.
             </p>
           </div>
           <div>
@@ -563,7 +608,7 @@ export default function Home() {
             <h3>Sản phẩm</h3>
             <a href="#courses">Khóa học nổi bật</a>
             <a href="#offer">Ưu đãi</a>
-            <a href="#results">Kết quả học viên</a>
+            <a href="#results">Lộ trình</a>
           </div>
           <div>
             <h3>Hỗ trợ</h3>
